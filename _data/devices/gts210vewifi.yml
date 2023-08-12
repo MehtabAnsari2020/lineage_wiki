@@ -18,11 +18,12 @@ kernel: android_kernel_samsung_msm8976
 maintainers: []
 models: [SM-T813]
 name: Galaxy Tab S2 9.7 Wi-Fi (2016)
+network: None
 peripherals: [Accelerometer, Compass, Fingerprint reader, GPS, Gyroscope]
 ram: 3 GB
 recovery_boot: With the device powered off, hold <kbd>Home</kbd> + <kbd>Volume Up</kbd> + <kbd>Power</kbd>.
 release: 2016
-screen: {size: '246.4 mm (9.7 in)', density: 264, resolution: '1536x2048', technology: 'HD Super AMOLED'}
+screen: {size: '246.4 mm (9.7 in)', density: 264, resolution: '1536x2048', technology: 'Super AMOLED'}
 sdcard: {sizeMax: '256 GB'}
 soc: Qualcomm MSM8976 Snapdragon 652
 storage: 32/64 GB

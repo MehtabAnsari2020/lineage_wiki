@@ -98,9 +98,11 @@ definitions:
     - ARM Mali-G72 MP12
     - ARM Mali-G72 MP18
     - ARM Mali-G72 MP3
+    - ARM Mali-G76 MC4
     - ARM Mali-G76 MP12
     - ARM Mali-G78 MP20
     - ARM Mali-G710 MC10
+    - ARM Mali-G710 MP7
     - ARM Mali-T604 MP4
     - ARM Mali-T628 MP6
     - ARM Mali-T720 MP2
@@ -185,13 +187,40 @@ definitions:
         type: string
       technology:
         description: Screen technology
-        type: string
+        "$ref": "#/definitions/screen_technologies"
+      refresh_rate:
+        description: Maximum screen refresh rate [Hz]
+        type: integer
     required:
     - size
     - density
     - resolution
     - technology
     type: object
+  screen_technologies:
+    enum:
+    - OLED
+    - P-OLED
+    - AMOLED
+    - Dynamic AMOLED
+    - Fluid AMOLED
+    - Fluid 2.0 LTPO AMOLED
+    - Optic AMOLED
+    - Super AMOLED
+    - Pentile RGBG AMOLED
+    - Pentile RGBG Super AMOLED
+    - IPS LCD
+    - IPS LTPS LCD
+    - IPS Retinal LCD
+    - IPS+ LCD
+    - Super IPS+ LCD
+    - LCD
+    - Super LCD
+    - PLS LCD
+    - Super PLS LCD
+    - Super clear LCD
+    - TFT LCD
+    type: string
   sdcard_data:
     description: The format required for the sdcard property
     properties:
@@ -212,6 +241,7 @@ definitions:
     enum:
     - Amlogic S905x2
     - Amlogic S905y2
+    - Amlogic S905y3
     - Google Tensor GS101
     - Google Tensor GS201
     - HiSilicon Kirin 659
@@ -220,6 +250,7 @@ definitions:
     - Intel Atom Z3560
     - Intel Atom Z3580
     - Mediatek MT6768 Helio G85
+    - Mediatek MT6785 Helio G95
     - NVIDIA Tegra 4 (T114)
     - NVIDIA Tegra K1 (T124)
     - NVIDIA Tegra X1 (T210)
@@ -280,6 +311,7 @@ definitions:
     - Qualcomm SM4350 Snapdragon 480
     - Qualcomm SM6115 Snapdragon 662
     - Qualcomm SM6150 Snapdragon 675
+    - Qualcomm SM6225 Snapdragon 680 4G
     - Qualcomm SM7125 Snapdragon 720G
     - Qualcomm SM7150-AA Snapdragon 730
     - Qualcomm SM7150-AB Snapdragon 730G
@@ -351,14 +383,17 @@ definitions:
       type: array
   valid_networks:
     description: All valid networks a device can support
-    enum:
-    - 2G GSM
-    - 2G CDMA
-    - 3G UMTS
-    - 3G CDMA2000
-    - 4G LTE
-    - 5G NR
-    type: string
+    items:
+      enum:
+      - 2G GSM
+      - 2G CDMA
+      - 3G UMTS
+      - 3G CDMA2000
+      - 4G LTE
+      - 5G NR
+      type: string
+    type: array
+    uniqueItems: True
   valid_peripherals:
     description: All valid peripherals a device can have
     items:
@@ -494,6 +529,8 @@ properties:
         - '5'
         - '5.1'
         - '5.2'
+        - '5.3'
+        - '5.4'
         type: string
     required:
     - spec
@@ -525,6 +562,7 @@ properties:
     - Cortex-A72
     - Cortex-A73 & Cortex-A53
     - Cortex-A75 & Cortex-A55
+    - Cortex-A76 & Cortex-A55
     - Cortex-A9
     - Cortex-X1 & Cortex-A76 & Cortex-A55
     - Cortex-X1 & Cortex-A78 & Cortex-A55
@@ -543,6 +581,7 @@ properties:
     - Kryo 240
     - Kryo 250
     - Kryo 260
+    - Kryo 265
     - Kryo 280
     - Kryo 360
     - Kryo 385
@@ -643,6 +682,7 @@ properties:
     "$id": "/properties/install_method"
     enum:
     - apx
+    - amlogic_update
     - dd
     - edl_custom
     - fastboot_custom
@@ -655,6 +695,7 @@ properties:
     - fastboot_motorola
     - fastboot_nexus
     - fastboot_nokia
+    - fastboot_nubia
     - fastboot_oppo
     - fastboot_sony
     - fastboot_realme
@@ -688,12 +729,17 @@ properties:
     minLength: 1
     type: string
   network:
-    "$id": "/properties/network"
-    items:
-      "$id": "/properties/network/items"
-      "$ref": "#/definitions/valid_networks"
-    minItems: 0
-    type: array
+    "$id": /properties/network
+    oneOf:
+    - "$ref": "#/definitions/valid_networks"
+    - items:
+        additionalProperties:
+          "$ref": "#/definitions/valid_networks"
+        description: Map of model number to valid networks
+        type: object
+      type: array
+    - enum:
+      - None
   peripherals:
     "$id": /properties/peripherals
     oneOf:
@@ -793,12 +839,14 @@ properties:
     - ARK
     - Askey
     - ASUS
+    - Banana Pi
     - BQ
     - Dynalink
     - Essential
     - Fairphone
     - F(x)tec
     - Google
+    - HardKernel
     - HTC
     - Huawei
     - LG
@@ -811,6 +859,7 @@ properties:
     - NVIDIA
     - OPPO
     - OnePlus
+    - Radxa
     - Razer
     - Realme
     - Samsung
@@ -828,6 +877,7 @@ properties:
     "$id": "/properties/vendor_short"
     enum:
     - 10or
+    - amlogic
     - ark
     - askey
     - asus
@@ -884,6 +934,7 @@ required:
 - kernel
 - maintainers
 - name
+- network
 - peripherals
 - release
 - screen

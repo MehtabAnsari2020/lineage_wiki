@@ -1,6 +1,7 @@
 architecture: arm64
 battery: {removable: False, capacity: 4680, tech: 'Li-Po'}
 before_install: {instructions: 'needs_specific_android_fw', version: '13.0.0', ships_fw: True}
+before_recovery_install: {instructions: 'boot_stack', partitions: [boot, dtbo]}
 bluetooth: {spec: '5', profiles: [A2DP + aptX HD]}
 cameras:
 - {flash: 'LED', info: '12.2 MP'}
@@ -27,7 +28,7 @@ ram: 6 GB
 recovery_boot: With the device powered off, hold <kbd>Volume Down</kbd> + <kbd>Power</kbd>. Then use the menu to select *Recovery Mode*.
 recovery_reboot: fastboot_menu
 release: 2021-08
-screen: {size: '161 mm (6.34 in)', density: 415, resolution: '2400x1080', technology: 'AMOLED'}
+screen: {size: '161 mm (6.34 in)', density: 415, resolution: '2400x1080', technology: 'AMOLED', refresh_rate: 60}
 soc: Qualcomm SM7250 Snapdragon 765G
 storage: 128 GB
 tree: android_device_google_barbet

@@ -14,7 +14,7 @@ Do **not** continue after something fails!
 2. Make sure your computer has `adb`{% unless device.install_method == 'heimdall' or device.install_method == 'dd' %} and `fastboot`{% endunless %}. Setup instructions can be found [here]({{ "adb_fastboot_guide.html" | relative_url }}).
 3. Enable [USB debugging]({{ "adb_fastboot_guide.html#setting-up-adb" | relative_url }}) on your device.
 {%- if device.models %}
-4. Make sure that your model is actually listed in the "Supported models" section [here]({{ device | device_link: "#supported-models" | relative_url }}) (exact match required!)
+4. Make sure that your model is actually listed in the "Supported models" section [here]({{ device | device_link | append: "#supported-models" | relative_url }}) (exact match required!)
 {%- endif %}
 5. Boot your device with the stock OS at least once and check every functionality.
 {%- if device.type == "phone" %}
@@ -56,6 +56,32 @@ function toggleBlur() {
 </div>
 
 <div id="blurred" markdown="1">
+
+{%- if device.before_install.instructions == "needs_specific_android_fw" %}
+## Checking the correct firmware
+
+Installation on your device requires a specific firmware version to be installed before you continue.
+
+{%- if device.before_install.version %}
+- Firmware refers to a device-specific set of images that are included in, and updated by the stock OS
+- LineageOS builds for this device require a specific version of the stock OS to be installed prior to following the installation guide
+- Please ensure that you are checking the **Android** version, and not the vendor OS version
+{%- endif %}
+- Being on another custom ROM, including unofficial builds of the same version of LineageOS, does not ensure that this requirement has been fulfilled
+- Please re-read this section as many times as necessary to fully understand the requirements
+
+{%- capture content %}
+{%- if device.before_install.version %}
+If you are unsure what firmware version you are currently on, we strongly recommend returning to the corresponding stock OS before following the installation guide!
+{%- elsif device.before_install_device_variants %}
+If you are unsure what firmware version you are currently on, we strongly recommend following [this guide]({{ device | device_link: "/fw_update" | relative_url }}), just in case!
+{%- endif %}
+{%- endcapture %}
+{% include alerts/note.html content=content %}
+
+Failing to install the correct firmware version prior to installation may result in failure to install LineageOS, unexpected crashes post-installation,
+or permanent damage to your device!
+{%- endif %}
 
 {%- if device.install_method %}
 {% capture recovery_install_method %}templates/recovery_install_{{ device.install_method }}.md{% endcapture %}
@@ -116,6 +142,9 @@ There are no recovery installation instructions for this discontinued device.
 ## Installing Add-Ons
 
 {% include alerts/note.html content="If you don't want to install any add-on (such as Google Apps), you can skip this whole section!" %}
+{% if device.is_ab_device or device.uses_twrp != true %}
+  {% include alerts/specific/note_signature_check.html %}
+{%- endif %}
 {% include alerts/warning.html content="If you want the Google Apps add-on on your device, you must follow this step **before** booting into LineageOS for the first time!" %}
 
 {%- if device.is_ab_device and device.uses_twrp %}
@@ -125,9 +154,6 @@ There are no recovery installation instructions for this discontinued device.
 2. When your device reboots, click `Apply Update`, then `Apply from ADB`, then `adb sideload filename.zip` for all desired packages in sequence.
 {%- else %}
 1. Repeat the sideload steps above for all desired packages in sequence.
-{%- endif %}
-{% if device.is_ab_device or device.uses_twrp != true %}
-    {% include alerts/specific/note_signature_check.html %}
 {%- endif %}
 
 ## All set!

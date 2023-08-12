@@ -18,12 +18,13 @@ kernel: android_kernel_samsung_exynos5420
 maintainers: []
 models: [SM-T520]
 name: Galaxy Tab PRO 10.1
+network: None
 no_oem_unlock_switch: true
 peripherals: [Accelerometer, Compass, GPS, Gyroscope]
 ram: 2 GB
 recovery_boot: With the device powered off, hold <kbd>Home</kbd> + <kbd>Volume Up</kbd> + <kbd>Power</kbd>.
 release: 2014
-screen: {size: '256.5 mm (10.1 in)', density: 299, resolution: '2560x1600', technology: 'Super clear LCD'}
+screen: {size: '256.5 mm (10.1 in)', density: 299, resolution: '2560x1600', technology: 'Super LCD'}
 sdcard: {sizeMax: '64 GB'}
 soc: Samsung Exynos 5420
 storage: 16/32 GB

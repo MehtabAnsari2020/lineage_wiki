@@ -1,7 +1,7 @@
 architecture: arm64
 battery: {removable: False, capacity: 5000, tech: 'Li-Po'}
 before_install: {instructions: 'needs_specific_android_fw', version: '13.0', ships_fw: True}
-before_recovery_install: {instructions: 'boot_stack', partitions: [boot, dtbo]}
+before_recovery_install: {instructions: 'boot_stack', partitions: [boot, dtbo, vendor_kernel_boot]}
 bluetooth: {spec: '5.2', profiles: [A2DP + aptX HD]}
 cameras:
 - {flash: 'LED', info: '50 MP'}
@@ -20,7 +20,7 @@ image: panther.png
 install_method: fastboot_nexus
 is_ab_device: true
 kernel: android_kernel_google_gs201
-maintainers: [mikeioannina]
+maintainers: [mikeioannina, neelc]
 name: Pixel 7
 network: [2G GSM, 3G UMTS, 4G LTE, 5G NR]
 peripherals: [Accelerometer, BeiDou, Compass, Fingerprint reader, Galileo, GLONASS, GPS, Gyroscope, Light sensor, NFC, Proximity sensor, Qi wireless charging, Qi reverse wireless charging, USB OTG]
@@ -28,7 +28,7 @@ ram: 8 GB
 recovery_boot: With the device powered off, hold <kbd>Volume Down</kbd> + <kbd>Power</kbd>. Then use the menu to select *Recovery Mode*.
 recovery_reboot: fastboot_menu
 release: 2022-10
-screen: {size: '160.02 mm (6.3 in)', density: 416, resolution: '1080x2400', technology: 'AMOLED'}
+screen: {size: '160.02 mm (6.3 in)', density: 416, resolution: '1080x2400', technology: 'AMOLED', refresh_rate: 90}
 soc: Google Tensor GS201
 storage: 128/256 GB
 tree: android_device_google_panther
