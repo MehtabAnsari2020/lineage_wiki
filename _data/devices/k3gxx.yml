@@ -1,20 +1,20 @@
 architecture: arm
-battery: {removable: True, capacity: 2800, tech: 'Li-Ion'}
-bluetooth: {spec: 4.0 + LE, profiles: [A2DP]}
+battery: {capacity: 2800, removable: True, tech: 'Li-Ion'}
+bluetooth: {profiles: [A2DP], spec: 4.0 + LE}
 cameras:
-- {flash: 'LED', info: '16 MP'}
-- {flash: None, info: '2 MP'}
+  - {flash: 'LED', info: '16 MP'}
+  - {flash: None, info: '2 MP'}
 codename: k3gxx
 cpu: Cortex-A15 & Cortex-A7
 cpu_cores: '8'
 cpu_freq: 4 x 1.9 GHz & 4 x 1.3 GHz
 current_branch: 14.1
-dimensions: {width: '72.5 mm (2.85 in)', height: '142 mm (5.59 in)', depth: '8.1 mm (0.32 in)'}
+dimensions: {depth: 8.1, height: 142, width: 72.5}
 download_boot: With the device powered off, hold <kbd>Volume Down</kbd> + <kbd>Home</kbd> + <kbd>Power</kbd>.
 gpu: ARM Mali-T628 MP6
 image: k3gxx.png
 install_method: heimdall
-kernel: android_kernel_samsung_exynos5422
+kernel: {repo: android_kernel_samsung_k3gxx, version: '3.10'}
 maintainers: []
 models: [SM-G900H]
 name: Galaxy S5 (International 3G)
@@ -23,8 +23,9 @@ no_oem_unlock_switch: true
 peripherals: [Accelerometer, Gyroscope, Proximity sensor, Compass, Barometer, Thermometer, Hygrometer, NFC, GPS, GLONASS, Fingerprint reader]
 ram: 2 GB
 recovery_boot: With the device powered off, hold <kbd>Volume Up</kbd> + <kbd>Home</kbd> + <kbd>Power</kbd>.
+recovery_partition_name: recovery
 release: 2014-03
-screen: {size: '129.54 mm (5.1 in)', density: 432, resolution: '1080x1920', technology: 'Super AMOLED'}
+screen: {resolution: '1080x1920', size: 5.1, technology: 'Super AMOLED'}
 sdcard: {sizeMax: '64 GB'}
 soc: Samsung Exynos 5422
 storage: 16 GB
@@ -34,4 +35,4 @@ uses_twrp: true
 vendor: Samsung
 vendor_short: samsung
 versions: [14.1]
-wifi: 802.11 a/b/g/n/ac, Dual-band, DLNA, Wi-Fi Direct, Hotspot
+wifi: 802.11 a/b/g/n/ac

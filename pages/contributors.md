@@ -54,14 +54,15 @@ Committers are responsible for testing commits and merging them in high flowrate
 | Paul Keith | javelinanddart |
 {: .table }
 
-### Trusted reviewers
+### Reviewers
 
-Trusted reviewers are known to provide consistent constructive feedback in line with project rules and guidelines. As a result,
+Reviewers are known to provide consistent constructive feedback in line with project rules and guidelines. As a result,
 their feedback is held as backed by project leads and recognized as a distinct group from general public reviewers.
 
 | Name | Nickname |
 |------|----------|
 | Björn Lundén | blunden |
+| Georg Veichtlbauer | vware |
 | Nolen Johnson | npjohnson |
 | Scott Warner | Tortel |
 | Timi Rautamäki | trautamaki |

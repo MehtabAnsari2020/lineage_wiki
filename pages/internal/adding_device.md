@@ -13,7 +13,7 @@ tags:
 {% assign definitions = site.data.schema.definitions %}
 
 The LineageOS wiki provides instructions based on the assumption that your device has got its device tree/kernel
-under the [LineageOS GitHub organization](https://github.com/LineageOS), and that it supports building Lineage {{ definitions.valid_branches.enum[-2] }} or higher. If your device meets
+under the [LineageOS GitHub organization](https://github.com/LineageOS), and that it supports building LineageOS {{ definitions.valid_branches.enum[-2] }} or higher. If your device meets
 both those requirements, follow the instructions below to get your device set up.
 
 ## Setting up the wiki locally
@@ -115,7 +115,7 @@ The following list will mention Model-Value pairs where applicable.
   {{ properties.cpu.enum | join: ", " }}
   ```
 
-* `dimensions`: Use the format `{width: '', height: '', depth: ''}` with `123 mm (12.3 in)` being the proper format for each of them (including the exact whitespaces!).
+* `dimensions`: Use the format `{width: <w>, height: <h>, depth: <d>}` with each being the dimension in [mm]
 
   This property supports Model-Value pairs.
 
@@ -135,11 +135,19 @@ The following list will mention Model-Value pairs where applicable.
   {{ definitions.valid_peripherals.items.enum | join: ", " }}
   ```
 
+* `recovery_partition_name`: A partition name recovery image is flashed to, can be one of:
+
+  ```
+  {{ properties.recovery_partition_name.enum | join: ', ' }}
+  ```
+
 * `release`: Allowed formats are `yyyy`, `yyyy-mm` and `yyyy-mm-dd`. This property supports Model-Value pairs.
 
-* `screen`: Use `{size: '<screen size>', density: <number>, resolution: '<1234x567>', technology: ''}` with `123 mm (12.3 in)` as the proper format for `size`,
-  a number for `density`, `1234x567` for `resolution` and a string for `technology`.
-  Please look at other devices in order to use the same names for same technologies across all devices!
+* `screen`: Use `{size: '<screen size>', resolution: '<1234x567>', technology: ''}` with number for `size`, `1234x567` for `resolution` and one of the following values for `technology`:
+
+  ```
+  {{ definitions.screen_technologies.enum | join: ", " }}
+  ```
 
   This property supports Model-Value pairs.
 
@@ -162,6 +170,12 @@ There are some optional properties which you might not need, but in case you do,
 * `format_on_upgrade`: Used if the device needs to wiped on major LineageOS version due to unfixable device specific issues.
 * `is_ab_device`: Used if the device has an A/B partition scheme.
 * `is_unlockable`: Set to false if there is no official method to unlock the bootloader. A hint will appear on the device's overview and install page. If this property is not set, it defaults to `True`
+* `quirks`: List of known quirks (make sure they aren't violating the [charter](https://github.com/LineageOS/charter/blob/main/device-support-requirements.md) or are exempted!). An array of one or more of the following (if unclear, click the links):
+
+  {%- for item in definitions.valid_quirks.enum %}
+  [{{ item }}](/quirks/{{ item }}){% unless forloop.last %}, {% endunless %}
+  {%- endfor %}
+
 * `required_bootloader`: Specify the bootloader versions which are required to install LineageOS. Example:
 
   ```
@@ -173,8 +187,6 @@ There are some optional properties which you might not need, but in case you do,
     ```
     {{ definitions.sdcard_data.properties.slot.enum | join: ", " }}
     ```
-
-* `uses_twrp`: Used if the device doesn't use Lineage Recovery (the default)
 
 {% include alerts/note.html content="If you need to assign a value to one of the fields which is not allowed by the time you create your change, update the schema validator or contact us to add it" %}
 

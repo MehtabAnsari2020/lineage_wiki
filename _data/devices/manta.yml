@@ -1,9 +1,9 @@
 architecture: arm
-battery: {removable: False, capacity: 9000, tech: 'Li-Po'}
-bluetooth: {spec: '3.0', profiles: [A2DP]}
+battery: {capacity: 9000, removable: False, tech: 'Li-Po'}
+bluetooth: {profiles: [A2DP], spec: '3.0'}
 cameras:
-- {flash: 'LED', info: '5 MP'}
-- {flash: None, info: '1.9 MP'}
+  - {flash: 'LED', info: '5 MP'}
+  - {flash: None, info: '1.9 MP'}
 codename: manta
 cpu: Cortex-A15
 cpu_cores: '2'
@@ -14,7 +14,7 @@ download_boot: With the device powered off, hold <kbd>Volume Down</kbd> + <kbd>V
 gpu: ARM Mali-T604 MP4
 image: manta.png
 install_method: fastboot_nexus
-kernel: android_kernel_samsung_manta
+kernel: {repo: android_kernel_samsung_manta, version: '3.4'}
 maintainers: []
 name: Nexus 10
 network: None
@@ -22,8 +22,9 @@ no_oem_unlock_switch: true
 peripherals: [Accelerometer, Gyroscope, Proximity sensor, Compass, GPS, Hall effect sensor, Barometer, Dual side NFC]
 ram: 2 GB
 recovery_boot: With the device powered off, hold <kbd>Volume Down</kbd> + <kbd>Power</kbd>.
+recovery_partition_name: recovery
 release: 2012-11-13
-screen: {size: '255 mm (10.0 in)', density: 300, resolution: '2560x1600', technology: 'Super PLS LCD'}
+screen: {resolution: '2560x1600', size: 10, technology: 'Super PLS LCD'}
 soc: Samsung Exynos 5250
 storage: 16/32 GB
 tree: android_device_samsung_manta
@@ -32,4 +33,4 @@ uses_twrp: true
 vendor: Google
 vendor_short: samsung
 versions: [13.0]
-wifi: 802.11 b/g/n, Wi-Fi Direct, DLNA
+wifi: 802.11 b/g/n

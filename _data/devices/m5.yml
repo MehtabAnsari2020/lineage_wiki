@@ -8,23 +8,21 @@ cpu_cores: '4'
 cpu_freq: 1.8 GHz
 current_branch: 20
 custom_unlock_cmd: 'fastboot flashing unlock'
-dimensions: {width: '85 mm (3.35 in)', height: '56 mm (2.2 in)', depth: '17 mm (0.67 in)'}
+dimensions: {depth: 17, height: 56, width: 85}
 download_boot: Press and hold the `SW5` button on the board, and plug into your PC.
 gpu: ARM Mali-G31 MP2
 image: m5.png
 install_method: amlogic_update
-kernel: android_kernel_amlogic_linux-4.9
+kernel: {repo: android_kernel_amlogic_linux-4.9, version: '4.9'}
 maintainers: [stricted]
-name: M5
+name: M5 (Android TV)
 network: None
 peripherals: None
 ram: 4 GB
 recovery_boot: Run `adb reboot recovery`.
+recovery_partition_name: recovery
 release: 2020-12-01
 screen: None
-screen_ppi:
-screen_res:
-screen_tech:
 sdcard: {sizeMax: '2 TB'}
 soc: Amlogic S905y3
 storage: 16 GB

@@ -3,8 +3,8 @@
 {% if device -%}
 * A {{ device.vendor }} {{ device.name }}.
 {%- endif %}
-* A relatively recent 64-bit computer:
-  * Linux, macOS, or Windows - these instructions are only tested using Ubuntu LTS, so we recommend going with that.
+* A relatively recent x86_64 computer:
+  * Linux, macOS, or Windows - these instructions are only tested using Ubuntu 20.04 LTS, so we recommend going with that.
   * A reasonable amount of RAM (16 GB to build up to `lineage-17.1`, 32 GB or more for `lineage-18.1` and up). The less RAM you have, the longer the build will take. Enabling ZRAM can be helpful.
   * A reasonable amount of Storage (200 GB to build up to `lineage-17.1`, 300 GB for `lineage-18.1` and up). You might require more free space for enabling `ccache` or building for multiple devices. Using SSDs results in considerably faster build times than traditional hard drives.
 * A decent internet connection and reliable electricity. :)
@@ -67,11 +67,7 @@ command directly in the Terminal." %}
 
 To build LineageOS, you'll need:
 
-* `bc bison build-essential ccache curl flex g++-multilib gcc-multilib git git-lfs gnupg gperf imagemagick
-   lib32ncurses5-dev lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libncurses5 libncurses5-dev
-   libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync
-   schedtool squashfs-tools xsltproc {% if cpu_architecture contains 'x86' %}yasm {% endif %}
-   zip zlib1g-dev`
+* `bc bison build-essential ccache curl flex g++-multilib gcc-multilib git git-lfs gnupg gperf imagemagick lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc {% if cpu_architecture contains 'x86' %}yasm {% endif %}zip zlib1g-dev`
 
 {% if device.versions contains 13.0 %}
 To build LineageOS 13.0, you'll also need:
@@ -79,7 +75,18 @@ To build LineageOS 13.0, you'll also need:
 * `maven`
 {% endif %}
 
-For Ubuntu versions older than 20.04 (focal), install also:
+For Ubuntu 23.10 (mantic), install `libncurses5` from 23.04 (lunar) as follows:
+
+```
+wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.4-2_amd64.deb && sudo dpkg -i libtinfo5_6.4-2_amd64.deb && rm -f libtinfo5_6.4-2_amd64.deb
+wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libncurses5_6.4-2_amd64.deb && sudo dpkg -i libncurses5_6.4-2_amd64.deb && rm -f libncurses5_6.4-2_amd64.deb
+```
+
+While for Ubuntu versions older than 23.10 (mantic), simply install:
+
+* `lib32ncurses5-dev libncurses5 libncurses5-dev`
+
+Additionally, for Ubuntu versions older than 20.04 (focal), install also:
 
 * `libwxgtk3.0-dev`
 
@@ -94,16 +101,19 @@ Different versions of LineageOS require different JDK (Java Development Kit) ver
 * LineageOS 18.1+: OpenJDK 11 (included in source download)
 * LineageOS 16.0-17.1: OpenJDK 1.9 (included in source download)
 * LineageOS 14.1-15.1: OpenJDK 1.8 (install `openjdk-8-jdk`)
+  * NOTE: For building these versions you'll need to remove `TLSv1` and `TLSv1.1` from `jdk.tls.disabledAlgorithms` in `/etc/java-8-openjdk/security/java.security`.
 * LineageOS 11.0-13.0: OpenJDK 1.7 (install `openjdk-7-jdk`)\*
 
 \* Ubuntu 16.04 and newer do not have OpenJDK 1.7 in the standard package repositories. See the *Ask Ubuntu* question "[How do I install openjdk 7 on Ubuntu 16.04 or higher?](http://askubuntu.com/questions/761127/how-do-i-install-openjdk-7-on-ubuntu-16-04-or-higher)". Note that the suggestion to use PPA openjdk-r is outdated (the PPA has never updated their offering of openjdk-7-jdk, so it lacks security fixes); skip that answer even if it is the most upvoted.
 
 #### Python
 
-For building LineageOS 17.1 and above, you will need `python3` as your system\`s default. You can check this by calling `python --version`.
+Different versions of LineageOS require different default Python versions.
 
-If you are building any of the older branches, `python2` is required instead.
-There are various methods to using it, e.g. [symlinking it manually](https://stackoverflow.com/a/66129356) or creating a [virtualenv](https://pypi.org/project/virtualenv/) for it.
+* LineageOS 17.1+: Python 3 (install `python-is-python3`)
+* LineageOS 11.0-16.0: Python 2 (install `python-is-python2`)
+
+If your default is `python3`, but you're building branch that requires `python2`, there are various methods to using it, e.g. [symlinking it manually](https://stackoverflow.com/a/66129356) or creating a [virtualenv](https://pypi.org/project/virtualenv/) for it.
 We recommend the latter:
 
 Generate the virtualenv once using `virtualenv --python=python2 ~/.lineage_venv`. Afterwards, activate it in each terminal where you need `python2` as default by running `~/.lineage_venv/bin/activate`.

@@ -15,7 +15,7 @@ gpu: NVIDIA GP10B (Pascal)
 image: quill.png
 install_method: apx
 is_ab_device: true
-kernel: android_kernel_nvidia_linux-4.9_kernel_kernel-4.9
+kernel: {repo: android_kernel_nvidia_linux-4.9_kernel_kernel-4.9, version: '4.9'}
 maintainers: []
 models: [quill, lanai]
 name: Jetson TX2 NX [Tablet]
@@ -24,6 +24,7 @@ no_oem_unlock_switch: true
 peripherals: None
 ram: 4/8 GB
 recovery_boot: The bootloader does not allow using hardware buttons to boot to recovery. After apx flash, the device will boot directly to recovery. After installing Lineage, normal methods can be used to reboot to recovery.
+recovery_partition_name: recovery
 release: 2017-03-14
 screen: None
 soc: NVIDIA Tegra X2 (T186)
@@ -34,4 +35,4 @@ variant: 2
 vendor: NVIDIA
 vendor_short: nvidia
 versions: [17.1]
-wifi: 802.11ac 2x2 Mimo 2.4 GHz and 5 GHz
+wifi: 802.11 a/b/g/n/ac

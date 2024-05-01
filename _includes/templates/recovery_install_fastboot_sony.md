@@ -21,7 +21,7 @@ If you wish to backup the TA partition first, you can find tutorials related to 
 3. Connect the device to your PC via USB.
 4. On the computer, open a command prompt (on Windows) or terminal (on Linux or macOS) window, and type:
 ```
-adb reboot bootloader
+adb -d reboot bootloader
 ```
     {% if device.download_boot %}
     You can also boot into fastboot mode via a key combination:
@@ -57,14 +57,14 @@ fastboot oem unlock <your_unlock_code>
 {%- elsif device.uses_twrp %}
 1. Download a custom recovery - you can download [TWRP](https://dl.twrp.me/{{ custom_recovery_codename }}). Simply download the latest recovery file, named something like `twrp-x.x.x-x-{{ custom_recovery_codename }}.img`.
 {%- elsif device.maintainers != empty %}
-1. Download [Lineage Recovery](https://download.lineageos.org/devices/{{ custom_recovery_codename }}). Simply download the latest recovery file, named `recovery.img`.
+1. Download [Lineage Recovery](https://download.lineageos.org/devices/{{ custom_recovery_codename }}). Simply download the latest recovery file, named `{{ device.recovery_partition_name }}.img`.
 {%- else %}
 1. [Build]({{ device | device_link: "/build" | relative_url }}) a LineageOS installation package. The recovery will be built as part of it!
 {%- endif %}
 2. Connect your device to your PC via USB.
 3. On the computer, open a command prompt (on Windows) or terminal (on Linux or macOS) window, and type:
 ```
-adb reboot bootloader
+adb -d reboot bootloader
 ```
     {% if device.download_boot %}
     You can also boot into fastboot mode via a key combination:
@@ -87,26 +87,22 @@ fastboot reboot
 ```
 7. Push the TWRP image to your device:
 ```
-adb push twrp-x.x.x-x-{{ custom_recovery_codename }}.img /sdcard
+adb -d push twrp-x.x.x-x-{{ custom_recovery_codename }}.img /sdcard
 ```
 8. Enter shell on the device:
 ```
-adb shell
+adb -d shell
 ```
 9. Flash TWRP to `recovery` permanently:
 ```
 dd if=/sdcard/twrp-x.x.x-x-{{ custom_recovery_codename }}.img of=/dev/block/platform/msm_sdcc.1/by-name/FOTAKernel
 ```
-10. Exit the adb shell:
+10. Exit the adb -d shell:
 ```
 exit
 ```
 {% else %}
 
-{% if device.is_ab_device and device.has_recovery_partition != true %}
-{% include templates/recovery_install_fastboot_ab.md %}
-{% else %}
 {% include templates/recovery_install_fastboot_generic.md %}
-{% endif %}
 
 {% endif %}
